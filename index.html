@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="تاقیکردنەوەی نێتوۆرک - OSPF, EIGRP, RIP">
+    <title>تاقیکردنەوەی نێتوۆرک | Networking Exam</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated Background Particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- ===== LANDING SCREEN ===== -->
+    <section class="landing-screen active" id="landingScreen">
+        <div class="landing-content">
+            <div class="landing-icon">
+                <svg viewBox="0 0 100 100" class="network-icon">
+                    <circle cx="50" cy="20" r="8" fill="currentColor" class="node n1"/>
+                    <circle cx="20" cy="50" r="8" fill="currentColor" class="node n2"/>
+                    <circle cx="80" cy="50" r="8" fill="currentColor" class="node n3"/>
+                    <circle cx="35" cy="80" r="8" fill="currentColor" class="node n4"/>
+                    <circle cx="65" cy="80" r="8" fill="currentColor" class="node n5"/>
+                    <line x1="50" y1="20" x2="20" y2="50" stroke="currentColor" stroke-width="2" class="link"/>
+                    <line x1="50" y1="20" x2="80" y2="50" stroke="currentColor" stroke-width="2" class="link"/>
+                    <line x1="20" y1="50" x2="35" y2="80" stroke="currentColor" stroke-width="2" class="link"/>
+                    <line x1="80" y1="50" x2="65" y2="80" stroke="currentColor" stroke-width="2" class="link"/>
+                    <line x1="35" y1="80" x2="65" y2="80" stroke="currentColor" stroke-width="2" class="link"/>
+                    <line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="2" class="link"/>
+                </svg>
+            </div>
+            <h1 class="landing-title">تاقیکردنەوەی نێتوۆرک</h1>
+            <p class="landing-subtitle">Networking Exam — OSPF, EIGRP, RIP</p>
+            <div class="exam-info-cards">
+                <div class="info-card">
+                    <span class="info-icon">📝</span>
+                    <span class="info-label">پرسیار</span>
+                    <span class="info-value">٢٣</span>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">✅</span>
+                    <span class="info-label">فرەهەڵبژاردن</span>
+                    <span class="info-value">٢٠</span>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">✍️</span>
+                    <span class="info-label">ڕستەیی</span>
+                    <span class="info-value">٣</span>
+                </div>
+            </div>
+            <button class="start-btn" id="startBtn" onclick="startExam()">
+                <span>دەستپێبکە</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- ===== EXAM SCREEN ===== -->
+    <section class="exam-screen" id="examScreen">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-inner">
+                <div class="progress-info">
+                    <span id="currentQ">١</span>
+                    <span class="separator">/</span>
+                    <span id="totalQ">٢٣</span>
+                </div>
+                <div class="exam-title-small">تاقیکردنەوەی نێتوۆرک</div>
+                <div class="timer" id="timer">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span id="timerText">00:00</span>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </header>
+
+        <!-- Questions Container -->
+        <main class="questions-container" id="questionsContainer">
+            <!-- Questions will be injected here by JS -->
+        </main>
+
+        <!-- Bottom Nav -->
+        <nav class="bottom-nav">
+            <button class="nav-btn prev-btn" id="prevBtn" onclick="prevQuestion()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+                <span>پێشوو</span>
+            </button>
+            <div class="question-dots" id="questionDots"></div>
+            <button class="nav-btn next-btn" id="nextBtn" onclick="nextQuestion()">
+                <span>دواتر</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Submit Button (hidden until last question) -->
+        <div class="submit-container" id="submitContainer">
+            <button class="submit-btn" id="submitBtn" onclick="submitExam()">
+                <span>ناردنی تاقیکردنەوە</span>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- ===== RESULTS SCREEN ===== -->
+    <section class="results-screen" id="resultsScreen">
+        <div class="results-content">
+            <div class="results-header">
+                <div class="score-circle" id="scoreCircle">
+                    <svg viewBox="0 0 120 120" class="score-svg">
+                        <circle cx="60" cy="60" r="54" class="score-bg"/>
+                        <circle cx="60" cy="60" r="54" class="score-fill" id="scoreFill"/>
+                    </svg>
+                    <div class="score-text">
+                        <span class="score-number" id="scoreNumber">0</span>
+                        <span class="score-label">نمرە</span>
+                    </div>
+                </div>
+                <h2 class="results-title" id="resultsTitle">ئەنجامەکان</h2>
+                <p class="results-subtitle" id="resultsSubtitle"></p>
+            </div>
+
+            <div class="results-stats">
+                <div class="stat-card correct-stat">
+                    <span class="stat-icon">✅</span>
+                    <span class="stat-value" id="correctCount">0</span>
+                    <span class="stat-label">ڕاست</span>
+                </div>
+                <div class="stat-card wrong-stat">
+                    <span class="stat-icon">❌</span>
+                    <span class="stat-value" id="wrongCount">0</span>
+                    <span class="stat-label">هەڵە</span>
+                </div>
+                <div class="stat-card skip-stat">
+                    <span class="stat-icon">⏭️</span>
+                    <span class="stat-value" id="skipCount">0</span>
+                    <span class="stat-label">بەتاڵ</span>
+                </div>
+            </div>
+
+            <!-- Review Section -->
+            <div class="review-section" id="reviewSection">
+                <h3 class="review-title">پێداچوونەوەی وەڵامەکان</h3>
+                <div class="review-list" id="reviewList">
+                    <!-- Review cards injected by JS -->
+                </div>
+            </div>
+
+            <button class="restart-btn" onclick="restartExam()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"/>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                </svg>
+                <span>دووبارە تاقیکردنەوە</span>
+            </button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
