@@ -1,25 +1,66 @@
+// ===== AUDIO SYSTEM =====
+const bgMusic = new Audio('Nexus Graphic - شانۆی - گەر بریارە بمرین (تەمەنێك لێرەوە تێپەڕی).m4a');
+bgMusic.loop = true;
+bgMusic.volume = 0.3;
+
+function playClick() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value = 600; o.type = 'sine';
+    g.gain.setValueAtTime(0.12, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+    o.start(); o.stop(ctx.currentTime + 0.1);
+}
+
+function playCorrectSound() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sine'; g.gain.setValueAtTime(0.15, ctx.currentTime);
+    o.frequency.setValueAtTime(523, ctx.currentTime);
+    o.frequency.setValueAtTime(659, ctx.currentTime + 0.1);
+    o.frequency.setValueAtTime(784, ctx.currentTime + 0.2);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    o.start(); o.stop(ctx.currentTime + 0.35);
+}
+
+function playWrongSound() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sawtooth'; g.gain.setValueAtTime(0.1, ctx.currentTime);
+    o.frequency.setValueAtTime(300, ctx.currentTime);
+    o.frequency.setValueAtTime(200, ctx.currentTime + 0.15);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    o.start(); o.stop(ctx.currentTime + 0.3);
+}
+
 // ===== QUESTIONS DATA =====
 const mcQuestions = [
-    { q: "Which area is required in OSPF?", opts: ["Area 1","Area 2","Area 0","Area 10"], answer: 2 },
-    { q: "If the IP address is 192.168.1.1/24, what is the wildcard mask?", opts: ["0.0.0.0","0.0.0.255","0.0.255.0","255.255.255.0"], answer: 1 },
-    { q: "What does EIGRP stand for?", opts: ["Enhanced Interior Gateway Routing Protocol","Enhanced Internet Gateway Routing Protocol","External Interior Gateway Routing Protocol","Extended Interior Global Routing Protocol"], answer: 0 },
-    { q: "EIGRP sometimes is called a:", opts: ["Link-state protocol","Static routing protocol","Hybrid routing protocol","RIP protocol"], answer: 2 },
-    { q: "Connecting two office LANs together results in:", opts: ["A bigger LAN","A subnet","A VLAN","A WAN"], answer: 3 },
-    { q: "How often does RIP send its routing table?", opts: ["Every 10 seconds","Every 30 seconds","Every 60 seconds","Only once"], answer: 1 },
-    { q: "RIP chooses the best path using:", opts: ["Bandwidth","Cost","Hop count","Delay"], answer: 2 },
-    { q: "RIP works best in:", opts: ["Very small networks","Large networks","Internet backbone","Wireless-only networks"], answer: 0 },
-    { q: "How many main classes of routing protocols are there?", opts: ["One","Two","Three","Four"], answer: 2 },
-    { q: "OSPF is which type of routing protocol?", opts: ["Distance vector","Static","Default","Link state"], answer: 3 },
-    { q: "What is the administrative distance of OSPF?", opts: ["90","100","110","120"], answer: 2 },
-    { q: "What is the administrative distance of EIGRP (internal)?", opts: ["90","100","110","120"], answer: 0 },
-    { q: "Which protocol uses Dijkstra's algorithm?", opts: ["RIP","EIGRP","OSPF","BGP"], answer: 2 },
-    { q: "What is the maximum hop count for RIP?", opts: ["10","15","20","30"], answer: 1 },
-    { q: "Which routing protocol converges the fastest?", opts: ["RIP","OSPF","EIGRP","Static routing"], answer: 2 },
-    { q: "What is the default metric used by OSPF?", opts: ["Bandwidth","Cost","Hop count","Delay"], answer: 1 },
-    { q: "Which protocol uses bandwidth and delay as metrics?", opts: ["RIP","OSPF","EIGRP","BGP"], answer: 2 },
-    { q: "What type of routing protocol is RIP?", opts: ["Link-state","Hybrid","Distance vector","Static"], answer: 2 },
-    { q: "What is the full form of OSPF?", opts: ["Open Shortest Path First","Open Static Path First","Optimal Shortest Path Forward","Open Secure Path First"], answer: 0 },
-    { q: "Which protocol is used mainly on the Internet?", opts: ["RIP","OSPF","EIGRP","BGP"], answer: 3 },
+    { q: "Which area is required in OSPF?", opts: ["Area 1", "Area 2", "Area 0", "Area 10"], answer: 2 },
+    { q: "If the IP address is 192.168.1.1/24, what is the wildcard mask?", opts: ["0.0.0.0", "0.0.0.255", "0.0.255.0", "255.255.255.0"], answer: 1 },
+    { q: "What does EIGRP stand for?", opts: ["Enhanced Interior Gateway Routing Protocol", "Enhanced Internet Gateway Routing Protocol", "External Interior Gateway Routing Protocol", "Extended Interior Global Routing Protocol"], answer: 0 },
+    { q: "EIGRP sometimes is called a:", opts: ["Link-state protocol", "Static routing protocol", "Hybrid routing protocol", "RIP protocol"], answer: 2 },
+    { q: "Connecting two office LANs together results in:", opts: ["A bigger LAN", "A subnet", "A VLAN", "A WAN"], answer: 3 },
+    { q: "How often does RIP send its routing table?", opts: ["Every 10 seconds", "Every 30 seconds", "Every 60 seconds", "Only once"], answer: 1 },
+    { q: "RIP chooses the best path using:", opts: ["Bandwidth", "Cost", "Hop count", "Delay"], answer: 2 },
+    { q: "RIP works best in:", opts: ["Very small networks", "Large networks", "Internet backbone", "Wireless-only networks"], answer: 0 },
+    { q: "How many main classes of routing protocols are there?", opts: ["One", "Two", "Three", "Four"], answer: 1 },
+    { q: "OSPF is which type of routing protocol?", opts: ["Distance vector", "Static", "Default", "Link state"], answer: 3 },
+    { q: "What is the administrative distance of OSPF?", opts: ["90", "100", "110", "120"], answer: 2 },
+    { q: "What is the administrative distance of EIGRP (internal)?", opts: ["90", "100", "110", "120"], answer: 0 },
+    { q: "Which protocol uses Dijkstra's algorithm?", opts: ["RIP", "EIGRP", "OSPF", "BGP"], answer: 2 },
+    { q: "What is the maximum hop count for RIP?", opts: ["10", "15", "20", "30"], answer: 1 },
+    { q: "Which routing protocol converges the fastest?", opts: ["RIP", "OSPF", "EIGRP", "Static routing"], answer: 2 },
+    { q: "What is the default metric used by OSPF?", opts: ["Bandwidth", "Cost", "Hop count", "Delay"], answer: 1 },
+    { q: "Which protocol uses bandwidth and delay as metrics?", opts: ["RIP", "OSPF", "EIGRP", "BGP"], answer: 2 },
+    { q: "What type of routing protocol is RIP?", opts: ["Link-state", "Hybrid", "Distance vector", "Static"], answer: 2 },
+    { q: "What is the full form of OSPF?", opts: ["Open Shortest Path First", "Open Static Path First", "Optimal Shortest Path Forward", "Open Secure Path First"], answer: 0 },
+    { q: "Which protocol is used mainly on the Internet?", opts: ["RIP", "OSPF", "EIGRP", "BGP"], answer: 3 },
 ];
 
 const essayQuestions = [
@@ -62,12 +103,14 @@ const timerText = document.getElementById('timerText');
 
 // ===== HELPERS =====
 function toArabicNum(n) {
-    const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    const ar = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
     return String(n).split('').map(d => ar[+d] || d).join('');
 }
 
 // ===== START EXAM =====
 function startExam() {
+    playClick();
+    bgMusic.play().catch(()=>{});
     landingScreen.classList.remove('active');
     setTimeout(() => {
         examScreen.classList.add('active');
@@ -75,7 +118,7 @@ function startExam() {
         buildDots();
         showQuestion(0);
         startTimer();
-    }, 300);
+    }, 400);
 }
 
 // ===== BUILD QUESTIONS =====
@@ -188,19 +231,15 @@ function selectOption(qIdx, optIdx) {
     });
 
     if (isCorrect) {
-        // Correct! Green glow + pop
+        playCorrectSound();
         btns[optIdx].classList.add('is-correct');
-        // Dim the others
         btns.forEach((b, i) => { if (i !== optIdx) b.classList.add('is-dimmed'); });
-        // Add feedback badge
         addFeedbackBadge(card, true, `Correct! ✓`);
     } else {
-        // Wrong! Red shake on selected, reveal correct
+        playWrongSound();
         btns[optIdx].classList.add('is-wrong');
         btns[correctIdx].classList.add('reveal-correct');
-        // Dim the rest
         btns.forEach((b, i) => { if (i !== optIdx && i !== correctIdx) b.classList.add('is-dimmed'); });
-        // Add feedback badge
         addFeedbackBadge(card, false, `Wrong — The correct answer is: ${letters[correctIdx]}) ${mcQuestions[qIdx].opts[correctIdx]}`);
     }
 
@@ -232,12 +271,12 @@ function saveEssay(i) {
 
 // ===== NAVIGATION =====
 function nextQuestion() {
-    if (currentIndex < totalQuestions - 1) showQuestion(currentIndex + 1);
+    if (currentIndex < totalQuestions - 1) { playClick(); showQuestion(currentIndex + 1); }
 }
 function prevQuestion() {
-    if (currentIndex > 0) showQuestion(currentIndex - 1);
+    if (currentIndex > 0) { playClick(); showQuestion(currentIndex - 1); }
 }
-function goToQuestion(idx) { showQuestion(idx); }
+function goToQuestion(idx) { playClick(); showQuestion(idx); }
 
 // ===== TIMER =====
 function startTimer() {
@@ -253,12 +292,15 @@ function stopTimer() { clearInterval(timerInterval); }
 
 // ===== SUBMIT =====
 function submitExam() {
+    playClick();
     stopTimer();
+    bgMusic.pause();
+    bgMusic.currentTime = 0;
     examScreen.classList.remove('active');
     setTimeout(() => {
         resultsScreen.classList.add('active');
         calculateResults();
-    }, 300);
+    }, 400);
 }
 
 // ===== RESULTS =====

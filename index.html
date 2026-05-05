@@ -172,6 +172,20 @@
         </div>
     </section>
 
+    <style>
+        .music-toggle{position:fixed;top:1rem;left:1rem;z-index:999;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border-glass);background:var(--bg-glass);backdrop-filter:blur(15px);color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+        .music-toggle:hover{transform:scale(1.15);box-shadow:0 6px 30px var(--accent-glow);border-color:var(--accent)}
+        .music-toggle.playing{animation:musicPulse 1.5s ease-in-out infinite}
+        @keyframes musicPulse{0%,100%{box-shadow:0 4px 20px rgba(0,0,0,0.3)}50%{box-shadow:0 4px 25px var(--accent-glow)}}
+    </style>
+    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()" title="Toggle Music">🎵</button>
     <script src="script.js"></script>
+    <script>
+        function toggleMusic(){
+            const btn=document.getElementById('musicToggle');
+            if(bgMusic.paused){bgMusic.play();btn.classList.add('playing');btn.textContent='🎵';}
+            else{bgMusic.pause();btn.classList.remove('playing');btn.textContent='🔇';}
+        }
+    </script>
 </body>
 </html>
