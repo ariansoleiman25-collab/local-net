@@ -49,7 +49,7 @@ const mcQuestions = [
     { q: "How often does RIP send its routing table?", opts: ["Every 10 seconds", "Every 30 seconds", "Every 60 seconds", "Only once"], answer: 1 },
     { q: "RIP chooses the best path using:", opts: ["Bandwidth", "Cost", "Hop count", "Delay"], answer: 2 },
     { q: "RIP works best in:", opts: ["Very small networks", "Large networks", "Internet backbone", "Wireless-only networks"], answer: 0 },
-    { q: "How many main classes of routing protocols are there?", opts: ["One", "Two", "Three", "Four"], answer: 1 },
+    { q: "How many main classes of routing protocols are there?", opts: ["One", "Two", "Three", "Four"], answer: 2 },
     { q: "OSPF is which type of routing protocol?", opts: ["Distance vector", "Static", "Default", "Link state"], answer: 3 },
     { q: "What is the administrative distance of OSPF?", opts: ["90", "100", "110", "120"], answer: 2 },
     { q: "What is the administrative distance of EIGRP (internal)?", opts: ["90", "100", "110", "120"], answer: 0 },
@@ -110,7 +110,7 @@ function toArabicNum(n) {
 // ===== START EXAM =====
 function startExam() {
     playClick();
-    bgMusic.play().catch(()=>{});
+    bgMusic.play().catch(() => { });
     landingScreen.classList.remove('active');
     setTimeout(() => {
         examScreen.classList.add('active');
